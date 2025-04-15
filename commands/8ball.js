@@ -1,7 +1,10 @@
+const { category } = require("./roles");
+
 module.exports = {
     name: '8ball',
     description: 'Ask the magic 8ball a question',
     usage: '<question>', 
+    category: 'fun',
     execute(message, args) {
        if(!args[0]) {
         return message.channel.send("Ask a question, will you?");

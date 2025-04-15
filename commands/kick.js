@@ -3,6 +3,7 @@ module.exports = {
     description: 'Kicks a member from the server.',
     permission: 'KICK_MEMBERS',
     usage: '<user> [reason]',
+    category: 'moderation',
     execute(message, args) {
         const mentionRegex = /^<@!?(\d{17,20})>$/;
         const input = args[0] ? args[0] : '';

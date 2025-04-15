@@ -3,6 +3,7 @@ module.exports = {
     permission: 'BAN_MEMBERS',
     description: 'Bans a member',
     usage: '<user> [reason]',
+    category: 'moderation',
     execute(message, args) {
         const mentionRegex = /^<@!?(\d{17,20})>$/;
         const input = args[0] ? args[0] : '';
