@@ -6,7 +6,7 @@ module.exports = {
     execute(message) {
         // Ignore messages from bots
         if (message.author.bot) return;
-
+        if(message.channel.type != 0) return;
         // Handle commands
         handleCommand(message);
 
