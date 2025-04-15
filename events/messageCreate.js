@@ -1,9 +1,10 @@
 const { handleCommand } = require('../handlers/commandHandler');
+const db = require('../handlers/mysqlhandler');
 
 module.exports = {
     name: 'messageCreate',
     once: false,
-    execute(message) {
+    async execute(message) {
         // Ignore messages from bots
         if (message.author.bot) return;
         if(message.channel.type != 0) return;
@@ -19,5 +20,8 @@ module.exports = {
         if (message.author.id === '958818738692571200') {
             // Add specific behavior for this user if needed
         }
+        const guilds = await db.query('SELECT * FROM guilds WHERE id = ?', [message.guild.id]);
+        const guild = guilds[0];
+        if(!guild) return await db.query('INSERT INTO guilds (id) VALUES (?)', [message.guild.id]);
     }
 };
