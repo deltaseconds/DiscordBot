@@ -2,6 +2,7 @@ module.exports = {
     name: 'clear',
     description: 'Clear a number of messages',
     permission: 'MANAGE_MESSAGES',
+    usage: 'clear <number of messages>',
     execute(message, args) {
         if(!message.member.permissions.has('MANAGE_MESSAGES') || !message.member.permissions.has('ADMINISTRATOR')) return message.channel.send('**ERROR**: You do not have permission to use this command.');
        if (!args[0]) return message.channel.send('**ERROR**: Please specify the number of messages to delete.');
