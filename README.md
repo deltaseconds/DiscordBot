@@ -49,6 +49,3 @@ Contributions are welcome! Since this is an unfinished project, feel free to:
 - Report bugs
 - Suggest features
 - Submit pull requests
-
-## License
-[MIT](LICENSE) (You may want to create a LICENSE file later)
