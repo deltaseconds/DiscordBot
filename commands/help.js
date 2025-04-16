@@ -43,7 +43,7 @@ module.exports = {
                 .filter(cmd => cmd.category === categoryArg);
             
             const embed = new EmbedBuilder()
-                .setColor('#0099ff')
+                .setColor('#c987ff')
                 .setTitle(`${categoryArg.charAt(0).toUpperCase() + categoryArg.slice(1)} Commands`)
                 .setDescription(`Here are all the commands in the ${categoryArg} category`)
                 .setTimestamp()
@@ -65,7 +65,7 @@ module.exports = {
         
         if (command) {
             const embed = new EmbedBuilder()
-                .setColor('#0099ff')
+                .setColor('#c987ff')
                 .setTitle(`Command: ${prefix}${command.name}`)
                 .setDescription(command.description || 'No description provided')
                 .setTimestamp()
