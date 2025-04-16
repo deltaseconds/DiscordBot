@@ -5,7 +5,7 @@ module.exports = {
     usage: 'clear <number of messages>',
     category: 'moderation',
     execute(message, args) {
-        if(!message.member.permissions.has('MANAGE_MESSAGES') || !message.member.permissions.has('ADMINISTRATOR')) return message.channel.send('**ERROR**: You do not have permission to use this command.');
+        if(!message.member.permissions.has(permission) || !message.member.permissions.has('ADMINISTRATOR')) return message.channel.send('**ERROR**: You do not have permission to use this command.');
        if (!args[0]) return message.channel.send('**ERROR**: Please specify the number of messages to delete.');
        if (isNaN(args[0])) return message.channel.send('**ERROR**: Please provide a valid number.');
        if (args[0] > 100) return message.channel.send('**ERROR**: You cannot delete more than 100 messages at once.');
