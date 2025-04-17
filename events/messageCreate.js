@@ -22,20 +22,28 @@ module.exports = {
         const guild = guilds[0];
         if(!guild) return await db.query('INSERT INTO guilds (id) VALUES (?)', [message.guild.id]);
         
-
-        const levelData = await db.query('SELECT * FROM levels WHERE guild_id =? AND member_id =?', [message.guild.id, message.author.id]);
-        if(!levelData[0]) {
-            await db.query('INSERT INTO levels (guild_id, member_id, level, xp) VALUES (?,?,?,?)', [message.guild.id, message.author.id, 1, 0]);
-        } else {
-            const level = parseInt(levelData[0].level);
-            const xp = parseInt(levelData[0].xp);
-            const xpNeeded = levelList[level + 1];
-            const addXP = Math.floor(Math.random() * 10) + 1;
-            await db.query('UPDATE levels SET xp =? WHERE guild_id =? AND member_id =?', [xp + addXP, message.guild.id, message.author.id]);
-            if(xpNeeded <= xp) {
-                await db.query('UPDATE levels SET level =?, xp =? WHERE guild_id =? AND member_id =?', [level + 1, 0, message.guild.id, message.author.id]);
-                message.channel.send(`${message.author} has leveled up to level ${level + 1}`); 
+        const levelSystem = await db.query('SELECT levelsystem FROM guilds WHERE id = ?', [message.guild.id]);
+        if(levelSystem[0]) {
+            if(parseInt(levelSystem[0].levelsystem) === 1) {
+                console.log('added');
+                const levelData = await db.query('SELECT * FROM levels WHERE guild_id =? AND member_id =?', [message.guild.id, message.author.id]);
+                if(!levelData[0]) {
+                    await db.query('INSERT INTO levels (guild_id, member_id, level, xp) VALUES (?,?,?,?)', [message.guild.id, message.author.id, 1, 0]);
+                } else {
+                    const level = parseInt(levelData[0].level);
+                    const xp = parseInt(levelData[0].xp);
+                    const xpNeeded = levelList[level + 1];
+                    const addXP = Math.floor(Math.random() * 10) + 1;
+                    await db.query('UPDATE levels SET xp =? WHERE guild_id =? AND member_id =?', [xp + addXP, message.guild.id, message.author.id]);
+                    if(xpNeeded <= xp) {
+                        await db.query('UPDATE levels SET level =?, xp =? WHERE guild_id =? AND member_id =?', [level + 1, 0, message.guild.id, message.author.id]);
+                        message.channel.send(`${message.author} has leveled up to level ${level + 1}`); 
+                    }
+                }
             }
-        }
+            
+        };
+        
+        
     }
 };
