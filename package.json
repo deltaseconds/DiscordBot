@@ -12,6 +12,7 @@
   "dependencies": {
     "discord.js": "^14.18.0",
     "dotenv": "^16.5.0",
+    "modern-rank-card": "^0.4.0",
     "mysql2": "^3.14.0"
   }
 }
