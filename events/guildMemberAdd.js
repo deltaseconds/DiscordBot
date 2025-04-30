@@ -4,14 +4,14 @@ module.exports = {
   name: 'guildMemberAdd',
   async execute(member) {
     const joinRoles = await db.query(
-      'SELECT * FROM roles WHERE guildID = ?',
+      'SELECT * FROM roles WHERE guild_id = ?',
       [member.guild.id],
     );
     if (!joinRoles || joinRoles.length === 0) return;
 
-    if (!member.guild.me.permissions.has('ManageRoles')) {
-      return member.send('**ERROR**: I do not have permission to manage roles.');
-    }
+    // if (!member.guild.me.permissions.has('ManageRoles')) {
+    //   return member.send('**ERROR**: I do not have permission to manage roles.');
+    // }
 
     for (const row of joinRoles) {
       const roleId = row.role_id;
