@@ -9,15 +9,21 @@ module.exports = {
     );
     if (!joinRoles || joinRoles.length === 0) return;
 
-    // if (!member.guild.me.permissions.has('ManageRoles')) {
-    //   return member.send('**ERROR**: I do not have permission to manage roles.');
-    // }
-
     for (const row of joinRoles) {
-      const roleId = row.role_id;
-      const welcomeRole = member.guild.roles.cache.get(roleId);
-      if (!welcomeRole) continue;
-      if (member.roles.cache.has(roleId)) continue;
+      const { role_id } = row;
+      const welcomeRole = member.guild.roles.cache.get(role_id);
+
+      if (!welcomeRole) {
+        await db.query(
+          'DELETE FROM roles WHERE guild_id = ? AND role_id = ?',
+          [member.guild.id, role_id],
+        );
+        console.log(`Gelöschte DB-Entry für fehlende Rolle ${role_id}`);
+        continue;
+      }
+
+      if (member.roles.cache.has(role_id)) continue;
+
       await member.roles.add(welcomeRole);
     }
   },
