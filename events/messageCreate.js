@@ -37,7 +37,20 @@ module.exports = {
                     await db.query('UPDATE levels SET xp =? WHERE guild_id =? AND member_id =?', [xp + addXP, message.guild.id, message.author.id]);
                     if(xpNeeded <= xp) {
                         await db.query('UPDATE levels SET level =?, xp =? WHERE guild_id =? AND member_id =?', [level + 1, 0, message.guild.id, message.author.id]);
-                        message.channel.send(`${message.author} has leveled up to level ${level + 1}`); 
+                        const settings = await db.query('SELECT * FROM levels_settings WHERE guild_id =?', [message.guild.id]);
+                        if(settings[0]) {
+                            if(settings[0].embed === 1) {
+                                const { MessageEmbed } = require('discord.js');
+                                let embed = new MessageEmbed()
+                                    .setColor(settings[0].levelup_embed_colour)
+                                    .setTitle(settings[0].levelup_embed_title)
+                                    .setDescription(settings[0].levelup_embed_description.replace('${USER}', `<@${message.author.id}>`).replace('${LEVEL}', level + 1))
+                                    .setTimestamp()
+                                    .setFooter({ text: 'Level System', iconURL: message.guild.iconURL() });
+                                message.channel.send({ embeds: [embed] });
+                            }
+                        }
+
                     }
                 }
             }
