@@ -1,15 +1,15 @@
 const db = require('../handlers/mysqlhandler');
 const { execute } = require('./kick');
 module.exports = {
-    name: 'role',
+    name: 'roles',
     description: 'Adds join roles role to a server',
     permission: 'MANAGE_ROLES',
-    usage: 'role <add | remove> <role>',
+    usage: 'roles <add | remove> <role>',
     category: 'moderation',
     async execute(message, args) {
         if(!message.member.permissions.has("manage_roles")) return message.channel.send('**ERROR**: You do not have permission to use this command');
         if(!args[0]) {
-            message.channel.send('**ERROR**: Missing arguments; ' + '\n' + 'Usage: role <add | remove> <role>');
+            message.channel.send('**ERROR**: Missing arguments; ' + '\n' + 'Usage: roles <add | remove> <role>');
             return;
         }
         if(args[0] === 'add') {
