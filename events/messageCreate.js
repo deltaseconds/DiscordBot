@@ -29,9 +29,10 @@ module.exports = {
         } else {
             const level = parseInt(levelData[0].level);
             const xp = parseInt(levelData[0].xp);
+            const totalXP = parseInt(levelData[0].total_xp);
             const xpNeeded = levelList[level + 1];
             const addXP = Math.floor(Math.random() * 10) + 1;
-            await db.query('UPDATE levels SET xp =? WHERE guild_id =? AND member_id =?', [xp + addXP, message.guild.id, message.author.id]);
+            await db.query('UPDATE levels SET xp =?, total_xp =? WHERE guild_id =? AND member_id =?', [xp + addXP, totalXP + addXP, message.guild.id, message.author.id]);
             if(xpNeeded <= xp) {
                 await db.query('UPDATE levels SET level =?, xp =? WHERE guild_id =? AND member_id =?', [level + 1, 0, message.guild.id, message.author.id]);
                 message.channel.send(`${message.author} has leveled up to level ${level + 1}`); 
